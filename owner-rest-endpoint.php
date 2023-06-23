@@ -19,24 +19,27 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-add_action( 'rest_api_init', 'salcode_owner_rest');
+add_action(
+	'rest_api_init',
+	'salcode_owner_rest'
+);
+
+function salcode_owner_callback() {
+	return [
+		'name' => [
+			'first' => 'Sal',
+			'last' => 'Ferrarello'
+		],
+		'wcus' => [ 2015, 2016 ],
+	];
+}
 
 function salcode_owner_rest() {
 	register_rest_route(
-		'salcode/v1',
+		'salcode/v1', // namespace
 		'/owner',
 		[
-			'callback' => function() {
-				return [
-					'name' => [
-						'first' => 'Sal',
-						'last' => 'Ferrarello'
-					],
-					'wcus' => [
-						2015, 2016
-					],
-				];
-			},
+			'callback' => 'salcode_owner_callback',
 			'permission_callback' => '__return_true',
 		]
 	);
